@@ -176,12 +176,7 @@ const Payouts = () => {
       const response = await fetch(url);
       const data: PayoutsResponse = await response.json();
 
-      if (pageNumber === 1) {
-        setPayouts(isSearch ? data : data.data || []);
-      } else {
-        setPayouts((prevPayouts) => [...prevPayouts, ...(isSearch ? data.data : data.data || [])]);
-      }
-
+      setPayouts(prevPayouts => (isSearch ? data.data || [] : [...prevPayouts, ...(data.data || [])]));
       setPage(pageNumber + 1);
       setHasMoreData(isSearch ? (data.data?.length || 0) > 0 : (data.data?.length || 0) > 0 || false);
     } catch (error) {
